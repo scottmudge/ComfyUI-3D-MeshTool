@@ -170,7 +170,7 @@ class mesh_CloseHoles:
                 },
             }
     CATEGORY = "3D_MeshTool/optimization"
-    RETURN_TYPES = ("MESH","INT","INT",)
+    RETURN_TYPES = ("MESH")
     RETURN_NAMES = ("Mesh_Out")
     FUNCTION = "mesh_edit_CloseHoles"
     def mesh_edit_CloseHoles(self,
@@ -284,10 +284,12 @@ class mesh_subdivide:
 NODE_CLASS_MAPPINGS={
     "Mesh_Optimization":mesh_Optimization,
     "Mesh_Cleanup":mesh_Cleanup,
+    "Mesh_CloseHoles":mesh_CloseHoles,
     "Mesh_Subdivide":mesh_subdivide,
     }
 NODE_DISPLAY_NAMES_MAPPINGS={
     "Mesh_Optimization":"Mesh Optimization",
     "Mesh_Cleanup":"Mesh Cleanup",
+    "Mesh_CloseHoles":"Mesh Close Holes",
     "Mesh_Subdivide":"Mesh Subdivide",
     }
