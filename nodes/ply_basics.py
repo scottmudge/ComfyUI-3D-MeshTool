@@ -1,6 +1,6 @@
 import numpy as np
 from plyfile import PlyData , PlyElement
-from ..moduel.ply import *
+from ..module.ply import *
 import os
 
 
@@ -10,7 +10,7 @@ CATEGORY_str1 = "3D_MeshTool/"
 #---------------Basics---------------
 CATEGORY_str2 = "Basics"
 
-class ply_save:#待开发
+class ply_save:# To be developed
     @classmethod
     def INPUT_TYPES(s):
         return {"required":
@@ -77,7 +77,7 @@ class ply_save:
 #---------------Edit---------------
 CATEGORY_str2 = "Edit"
 
-class options_data:#创建适用于comfyui的ply_options，暂未使用
+class options_data:# Create ply options suitable for comfyui, which are not used yet
     type_mapping_cf = {
             'e': 'FLOAT16',
             'f4': 'FLOAT',
@@ -125,7 +125,7 @@ class options_data:#创建适用于comfyui的ply_options，暂未使用
         else:
             print("Warning(node-ply_ui_name): Input or output data is not a dictionary, renaming failed")
    
-class ply_data_set:#待开发
+class ply_data_set:# To be developed
     user_options=options_data()
     options_name=user_options.keyname
     @classmethod
@@ -159,7 +159,7 @@ class ply_data_set:#待开发
     def ply_set(self,*uoptions_name):
         pass
   
-class ply_point_Edit:#待开发
+class ply_point_Edit:# To be developed
     @classmethod
     def INPUT_TYPES(s):
         return {"required":
@@ -188,7 +188,7 @@ class ply_point_Edit:#待开发
             a.setvalue(data)
         return (a.plydata,)
 
-class ply_normalize:#快速测试,处理工业ply的'vertex'的坐标和颜色
+class ply_normalize:# Quick test, processing the coordinates and colors of industrial ply's 'vertex'
     """
     处理工业ply的'vertex'的坐标和颜色,使其能够导入到comfyui中
     Process the coordinates and colors of 'vertex' in industrial ply to enable it to be imported into comfyui
@@ -218,45 +218,45 @@ class ply_normalize:#快速测试,处理工业ply的'vertex'的坐标和颜色
     )
     FUNCTION = "normalize"
     def normalize(self,gs_ply,xyz_normalize,RGB_normalize,opacity_transfer,auto_PointSize,PointSize_scale,R,G,B):
-        a=ply1()#新建标准ply类
+        a=ply1() # Create a new standard ply class
         k=set(gs_ply["vertex"].data.dtype.names)
 
-        if xyz_normalize:#处理原ply坐标
+        if xyz_normalize: # Process original ply coordinates
             xyz_k=["x","y","z"]
             if set(xyz_k).issubset(k):
-                xyz_d=getvalue(gs_ply,xyz_k)#获取原ply的xyz
-                xyz1=xyz(xyz_d)    #创建xyz类
-                xyz1.normalize()   #归一化
-                data=addkey(xyz1.xyz_data,xyz_k)#添加键值对
-                a.setvalue(data)   #更新ply数据
+                xyz_d=getvalue(gs_ply,xyz_k) # Get xyz of original ply
+                xyz1=xyz(xyz_d) # Create xyz class
+                xyz1.normalize() # Normalize
+                data=addkey(xyz1.xyz_data,xyz_k)# Add key-value pair
+                a.setvalue(data) # Update ply data
             else:
                 print("Warning(node-ply_normalize): 'x','y','z' not in 'gs_ply' vertex data, xyz normalization failed")
 
-        if RGB_normalize:#处理原ply颜色
+        if RGB_normalize: # Process original ply color
             rgb_k=["red","green","blue"]
             if set(rgb_k).issubset(k):
-                rgb_d=getvalue(gs_ply,rgb_k)#获取原ply的rgb
-                rgb1=xyz(rgb_d)       #创建xyz类
-                rgb1.lin_mapping()    #颜色映射
-                rgb_k=[R,G,B]#颜色名称映射-- red : f_dc_1 , green : f_dc_2 , blue : f_dc_0
-                data=addkey(rgb1.xyz_data,rgb_k)#添加键值对
-                a.setvalue(data)   #更新ply数据
+                rgb_d=getvalue(gs_ply,rgb_k) # Get the rgb of the original ply
+                rgb1=xyz(rgb_d) # Create xyz class
+                rgb1.lin_mapping() # Color mapping
+                rgb_k=[R,G,B] # Color name mapping--red: f_dc_1, green: f_dc_2, blue: f_dc_0
+                data=addkey(rgb1.xyz_data,rgb_k)# Add key-value pair
+                a.setvalue(data) # Update ply data
             else:
                 print("Warning(node-ply_normalize):'red','green','blue' not in 'gs_ply' vertex data, RGB normalization failed")
 
-        if opacity_transfer:#转移原透明度
+        if opacity_transfer: #Transfer original transparency
             opacity_k=["scalar_Intensity"]
             if set(opacity_k).issubset(k):
-                opacity_d=getvalue(gs_ply,opacity_k)#获取原ply的opacity
+                opacity_d=getvalue(gs_ply,opacity_k) # Get the opacity of the original ply
                 opacity_k=["opacity"]
-                data=addkey(opacity_d,opacity_k)#添加键值对
-                a.setvalue(data)   #更新ply数据
+                data=addkey(opacity_d,opacity_k) #Add key-value pair
+                a.setvalue(data) # Update ply data
             else:
                 print("Warning(node-ply_normalize):'scalar_Intensity' not in 'gs_ply' vertex data, opacity transfer failed")
 
-        #设置每个点的大小,标准ply缩放倍数-9(min) ~ -5（max）,输入区间0-4
+       # Set the size of each point, standard ply scaling factor -9 (min) ~ -5 (max), input range 0-4
         scale_v=a.plydata["vertex"]["scale_0"][0]
-        if auto_PointSize:#根据点云整体大小自动设置每个点的大小
+        if auto_PointSize: # Automatically set the size of each point according to the overall size of the point cloud
             scale_v = np.clip(1 / xyz1.o_xyz_size * (PointSize_scale - 9.0) , -9.0, -5.0)
         else:
             scale_v = np.clip(PointSize_scale - 9 , -9.0, -5.0)
@@ -266,7 +266,7 @@ class ply_normalize:#快速测试,处理工业ply的'vertex'的坐标和颜色
 
         return (a.plydata,)
 
-    def getvalue(self,keys,keys_data):#检测多批键值是否存在于ply数据中，并返回存在的键(用于自动检测可能的键)#---------待开发
+    def getvalue(self,keys,keys_data): # Detect whether multiple batches of key values ​​exist in the ply data and return the existing keys (used to automatically detect possible keys) #---------To be developed
         pass
 
 NODE_CLASS_MAPPINGS={

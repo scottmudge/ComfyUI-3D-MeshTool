@@ -5,7 +5,7 @@ CATEGORY_str1 = "3D_MeshTool/Array/"#
 #---------------Basics class---------------
 CATEGORY_str2 = "list"
 
-class array_is_null:# 输入数组，输出是否为空, 开发中...
+class array_is_null:#Input array, whether the output is empty, under development...
     @classmethod
     def INPUT_TYPES(s):
         return {"required":{"array_input": ("LIST",),}}    

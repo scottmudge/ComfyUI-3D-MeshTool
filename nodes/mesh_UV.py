@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 from kiui.op import safe_normalize, dot
-from ..moduel.mesh_class import Mesh
+from ..module.mesh_class import Mesh
 
 class UnwrapUV_xatlas:
     @classmethod
@@ -36,17 +36,17 @@ class UV_options:
     @classmethod
     def INPUT_TYPES(s):
         return {
-            "required": {
-                "fix_winding":("BOOLEAN",{"default":False}),#打包孤岛
-                "max_boundary_length":("FLOAT",{"default":0.0,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),#边界长度限制
-                "max_chart_area":("FLOAT",{"default":0.0,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),#最大面积限制
-                "max_cost":("FLOAT",{"default":2.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),#最大限制
-                "max_iterations":("INT",{"default":1,"min":1,"max":64,"step":1,"display": "slider"}),#最大迭代次数
-                "normal_deviation_weight":("FLOAT",{"default":2.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),#法线偏差权重
-                "normal_seam_weight":("FLOAT",{"default":4.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),#法线缝合权重
-                "roundness_weight":("FLOAT",{"default":0.01,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),#圆度权重
-                "straightness_weight":("FLOAT",{"default":6.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),#直线度权重
-                "texture_seam_weight":("FLOAT",{"default":0.5,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),#纹理缝合权重
+"required": {
+                "fix_winding":("BOOLEAN",{"default":False}),# Packaging the island
+                "max_boundary_length":("FLOAT",{"default":0.0,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),# Boundary length limit
+                "max_chart_area":("FLOAT",{"default":0.0,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),# aximum area limit
+                "max_cost":("FLOAT",{"default":2.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),# Maximum limit
+"max_iterations":("INT",{"default":1,"min":1,"max":64,"step":1,"display": "slider"}),# Maximum number of iterations
+                "normal_deviation_weight":("FLOAT",{"default":2.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),# Normal deviation weight
+                "normal_seam_weight":("FLOAT",{"default":4.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),# Normal seam weight
+                "roundness_weight":("FLOAT",{"default":0.01,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),# Roundness weight
+"straightness_weight":("FLOAT",{"default":6.0,"min":0.0,"max":10.0,"step":0.1,"display": "slider"}),# straightness weight
+                "texture_seam_weight":("FLOAT",{"default":0.5,"min":0.0,"max":1.0,"step":0.01,"display": "slider"}),# Texture seam weight
                 },
             }
     CATEGORY = "3D_MeshTool/Edit"
@@ -111,7 +111,7 @@ class Auto_Normal:
 
 #-----------unrealized-----------
 
-class vc_to_texture:#开发中
+class vc_to_texture:# Under development
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -131,7 +131,7 @@ class vc_to_texture:#开发中
         texture = torch.zeros((texture_h, texture_w, 3), dtype=torch.float32)
         uv_coords = mesh.ft.detach().cpu().numpy()
         vertex_colors = mesh.vc.detach().cpu().numpy()
-        # 根据 UV 坐标为纹理赋值
+        # Assign textures based on UV coordinates
         for i in range(uv_coords.shape[0]):
             u, v = uv_coords[i]
             texture[int(v * texture_h), int(u * texture_w)] = vertex_colors[i]

@@ -54,7 +54,7 @@ def get_device_list():
 
     return [device_list, device_default]
 #
-# from ..moduel.getdata import get_device_list
+# from ..module.getdata import get_device_list
 # device_list, device_default = get_device_list()
 
 

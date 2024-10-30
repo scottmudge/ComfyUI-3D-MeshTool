@@ -17,7 +17,7 @@ class AnyType(str):
     return False
 any = AnyType("*")
 
-class show_any:#未完成
+class show_any:# Not completed
     def __init__(self):
         pass
     @classmethod

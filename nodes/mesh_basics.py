@@ -3,7 +3,7 @@ import os
 import torch
 import folder_paths as comfy_paths
 import time
-from ..moduel.mesh_class import Mesh
+from ..module.mesh_class import Mesh
 from kiui.typing import *
 
 SUPPORTED_3D_EXTENSIONS = (
@@ -174,7 +174,7 @@ class mesh_data_Statistics:
         return (Output_Group, v_num, f_num, Normal_true, UVs_true, vertex_color_true, Texture_Diffuse_true, Texture_reflection_true, mesh_device_true)
 
 
-class mesh_data_bus:  # 未完成
+class mesh_data_bus:  # Not completed
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {

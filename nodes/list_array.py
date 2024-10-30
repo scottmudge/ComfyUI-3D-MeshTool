@@ -2,14 +2,14 @@ import numpy as np
 import re
 import torch
 
-from ..moduel.str_edit import strtolist
+from ..module.str_edit import strtolist
 
 CATEGORY_str1 = "3D_MeshTool/Array/"
 
 CATEGORY_str2 = "list_new"
 
 
-class array_step:  # 输入初始值、步长、增量生成等差数列
+class array_step:  # Enter the initial value, step size, and increment to generate an arithmetic sequence
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -37,7 +37,7 @@ class array_step:  # 输入初始值、步长、增量生成等差数列
             return (a1,)
 
 
-class array_end_increment:  # 输入初始值、终值、增量生成等差数列
+class array_end_increment:  # Enter the initial value, final value, and increment to generate an arithmetic sequence
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -66,7 +66,7 @@ class array_end_increment:  # 输入初始值、终值、增量生成等差数�
             return (array1,)
 
 
-class array_end_step:  # 输入初始值、步长、终值生成等差数列
+class array_end_step:  # Enter the initial value, step size, and final value to generate an arithmetic sequence
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -100,7 +100,7 @@ class array_end_step:  # 输入初始值、步长、终值生成等差数列
             return (array1,)
 
 
-class array_step_increment:  # 输入初始值、步长、增量生成等差数列
+class array_step_increment:  # Enter the initial value, step size, and increment to generate an arithmetic sequence
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -133,7 +133,7 @@ class array_step_increment:  # 输入初始值、步长、增量生成等差数�
             return (a1,)
 
 
-class string_to_array:  # 输入字符串，输出字符串中每个字符组成的数组,(开发中)
+class string_to_array:  # Input a string and output an array composed of each character in the string (under development)
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -159,7 +159,7 @@ class string_to_array:  # 输入字符串，输出字符串中每个字符组成
 CATEGORY_str3 = "list_edit"
 
 
-class array_t:  # 输入数组，输出转置数组
+class array_t:  # Input array, output transposed array
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -185,7 +185,7 @@ class array_t:  # 输入数组，输出转置数组
         return (array_input.tolist(),)
 
 
-class array_number_to_angle:  # 将数组中每个元素转换成对应的角度
+class array_number_to_angle:  # Convert each element in the array to the corresponding angle
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -213,7 +213,7 @@ class array_number_to_angle:  # 将数组中每个元素转换成对应的角度
             return (array.tolist(),)
 
 
-class array_append:  # 输入数组(1维或2维)、判断附加1或2维数组，输出合并后的数组、原数组剩余、附加数组剩余
+class array_append:  # Input an array (1-dimensional or 2-dimensional), determine the additional 1-or 2-dimensional array, and output the merged array, the remainder of the original array, and the remainder of the additional array.
     @classmethod
     def INPUT_TYPES(s):
         return {

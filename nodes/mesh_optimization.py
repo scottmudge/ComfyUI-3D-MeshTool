@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from kiui.mesh_utils import clean_mesh, decimate_mesh
 import pymeshlab as pml
-from ..moduel.MeshTool import meshclean
+from ..module.MeshTool import meshclean
 
 def clean_mesh_custom(
     verts,
@@ -129,10 +129,10 @@ class mesh_Optimization:
         return {
             "required": {
                 "mesh":("MESH",),
-                "Optimization_to":("FLOAT",{"default":0.65,"min":0,"max":1.0,"step":0.05}),#优化面到此百分比
-                "algorithm":("BOOLEAN",{"default":"True","label_on": "pymeshlab", "label_off": "pyfqmr"}),#选优化算法
-                "remesh":("BOOLEAN",{"default":False}),#是否刷新网格
-                "optimalplacement":("BOOLEAN",{"default":True}),#是否平滑
+                "Optimization_to":("FLOAT",{"default":0.65,"min":0,"max":1.0,"step":0.05}),# Optimize surface to this percentage
+                "algorithm":("BOOLEAN",{"default":"True","label_on": "pymeshlab", "label_off": "pyfqmr"}),# Choose optimization algorithm
+                "remesh":("BOOLEAN",{"default":False}),# Whether to refresh the grid
+                "optimalplacement":("BOOLEAN",{"default":True}),# Is it smooth?
                 },
             }
     CATEGORY = "3D_MeshTool/optimization"
@@ -196,16 +196,16 @@ class mesh_Cleanup:
         return {
             "required": {
                 "mesh":("MESH",),
-                "Cleanup_block_nf":("FLOAT",{"default":0.05,"min":0,"max":1.0,"step":0.05}),#清理掉面小于此百分比(相对于总面数)的块
-                "Cleanup_block_sc":("INT",{"default":20,"min":0,"max":100,"step":1}),#清理掉小于此直径的块
-                "Merge_vertex_threshold":("INT",{"default":1,"min":1,"max":1000,"step":1}),#合并顶点阈值
-                "repair_face":("BOOLEAN",{"default":True}),#是否修复非流形面
+                "Cleanup_block_nf":("FLOAT",{"default":0.05,"min":0,"max":1.0,"step":0.05}),# Clean out blocks with faces smaller than this percentage (relative to the total number of faces)
+                "Cleanup_block_sc":("INT",{"default":20,"min":0,"max":100,"step":1}),# Clean out blocks smaller than this diameter
+                "Merge_vertex_threshold":("INT",{"default":1,"min":1,"max":1000,"step":1}),# merge vertex threshold
+                "repair_face":("BOOLEAN",{"default":True}),# Whether to repair non-manifold surfaces
                 "Close_holes":("BOOLEAN",{"default":True}),
                 "Max_hole_size":("INT",{"default":1000,"min":1,"max":5000,"step":1}),
                 "Refine_holes":("BOOLEAN",{"default":False}),
-                #"re_mesh":("BOOLEAN",{"default":True}),#是否重新执行网格划分
-                #"remesh_size":("FLOAT",{"default":0.01,"min":0.001,"max":1.0,"step":0.01}),#重新执行网格划分的大小
-                #"remesh_iters":("INT",{"default":10,"min":1,"max":100,"step":1}),#重新执行网格划分的迭代次数
+                #"re_mesh":("BOOLEAN",{"default":True}),# Whether to re-perform meshing
+                #"remesh_size":("FLOAT",{"default":0.01,"min":0.001,"max":1.0,"step":0.01}),# Re-meshing size
+                #"remesh_iters":("INT",{"default":10,"min":1,"max":100,"step":1}),# Number of iterations to re-perform meshing
                 },
             }
     CATEGORY = "3D_MeshTool/optimization"
@@ -249,11 +249,11 @@ class mesh_subdivide:
         return {
             "required": {
                 "mesh":("MESH",),
-                "repair_face":("BOOLEAN",{"default":True}),#是否修复非流形面
-                "re_mesh":("BOOLEAN",{"default":True}),#是否重新执行网格划分
-                "remesh_size":("FLOAT",{"default":0.01,"min":0.001,"max":1.0,"step":0.01}),#重新执行网格划分的大小
-                "remesh_iters":("INT",{"default":10,"min":1,"max":100,"step":1}),#重新执行网格划分的迭代次数
-                "Merge_vertex_threshold":("INT",{"default":1,"min":1,"max":1000,"step":1}),#合并顶点阈值
+                "repair_face":("BOOLEAN",{"default":True}),# Whether to repair non-manifold faces
+                "re_mesh":("BOOLEAN",{"default":True}),# Whether to re-execute meshing
+                "remesh_size":("FLOAT",{"default":0.01,"min":0.001,"max":1.0,"step":0.01}),# Re-meshing size
+                "remesh_iters":("INT",{"default":10,"min":1,"max":100,"step":1}),# Number of iterations to re-perform meshing
+                "Merge_vertex_threshold":("INT",{"default":1,"min":1,"max":1000,"step":1}),# merge vertex threshold
                 },
             }
     CATEGORY = "3D_MeshTool/optimization"

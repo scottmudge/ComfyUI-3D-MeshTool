@@ -7,12 +7,12 @@ import numpy as np
 import torch
 import torchvision.transforms.functional
 
-from ..moduel.getdata import load_image_to_tensor
-from ..moduel.file import split_path
+from ..module.getdata import load_image_to_tensor
+from ..module.file import split_path
 
 log_file_path = "app.log"
 logger.add(log_file_path, level="INFO")
-# from ..moduel.paint3d import TexturedMeshModel
+# from ..module.paint3d import TexturedMeshModel
 
 CATEGORY_str1 = "3D_MeshTool/Convert"
 
