@@ -4,7 +4,6 @@ from kiui.mesh_utils import clean_mesh, decimate_mesh
 import pymeshlab as pml
 from ..moduel.MeshTool import meshclean
 
-
 def clean_mesh_custom(
     verts,
     faces,
@@ -164,7 +163,6 @@ class mesh_CloseHoles:
             "required": {
                 "mesh":("MESH",),
                 "Cleanup_first":("BOOLEAN",{"default":True}),
-                "Close_holes":("BOOLEAN",{"default":True}),
                 "Max_hole_size":("INT",{"default":1000,"min":1,"max":5000,"step":1}),
                 "Refine_holes":("BOOLEAN",{"default":False}),
                 },
@@ -176,7 +174,6 @@ class mesh_CloseHoles:
     def mesh_edit_CloseHoles(self,
                           mesh,
                           Cleanup_first,
-                          Close_holes,
                           Max_hole_size,
                           Refine_holes
                           ):
