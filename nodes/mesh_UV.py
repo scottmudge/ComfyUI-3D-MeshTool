@@ -178,7 +178,7 @@ NODE_CLASS_MAPPINGS={
     #"vc_to_texture":vc_to_texture,
     #"mesh_remap_cubvh":mesh_remap_cubvh,
     }
-NODE_DISPLAY_NAMES_MAPPINGS={
+NODE_DISPLAY_NAME_MAPPINGS={
     "UnwrapUV_xatlas":"UnwrapUV xatlas",
     "UV_options":"UV Options",
     "Auto_Normal":"Auto Normal",

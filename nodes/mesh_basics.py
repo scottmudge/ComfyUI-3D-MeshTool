@@ -253,7 +253,7 @@ NODE_CLASS_MAPPINGS = {
     # "mesh_data_bus":mesh_data_bus,
     "Mesh_Clean_Data": mesh_clean_data,
 }
-NODE_DISPLAY_NAMES_MAPPINGS = {
+NODE_DISPLAY_NAME_MAPPINGS = {
     "Load_OBJ": "Load OBJ",
     "Mesh_Data_Get": "Mesh Data Get",
     "Mesh_Data_Set": "Mesh Data Set",

@@ -5,7 +5,8 @@
 /.gitignore
 /__pycache__
 /nodes/__pycache__
-/moduel/__pycache__
+/module/__pycache__
 /cache/ply_cache.ply
 /.vscode
 cache/ply_cache1.ply
+

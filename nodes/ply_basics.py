@@ -275,7 +275,7 @@ NODE_CLASS_MAPPINGS={
     "ply_save":ply_save,
     }
 
-NODE_DISPLAY_NAMES_MAPPINGS={
+NODE_DISPLAY_NAME_MAPPINGS={
     "ply_load":"ply load",
     "ply_normalize":"ply normalize",
     "ply_save":"ply save",

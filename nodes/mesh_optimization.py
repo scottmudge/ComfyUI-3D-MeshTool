@@ -130,7 +130,10 @@ class mesh_Optimization:
             "required": {
                 "mesh":("MESH",),
                 "Optimization_to":("FLOAT",{"default":0.65,"min":0,"max":1.0,"step":0.05}),# Optimize surface to this percentage
-                "algorithm":("BOOLEAN",{"default":"True","label_on": "pymeshlab", "label_off": "pyfqmr"}),# Choose optimization algorithm
+                "algorithm": ("SELECT", {
+                    "default": "pymeshlab",
+                    "options": ["pymeshlab", "pyfqmr"]
+                }),
                 "remesh":("BOOLEAN",{"default":False}),# Whether to refresh the grid
                 "optimalplacement":("BOOLEAN",{"default":True}),# Is it smooth?
                 },
@@ -147,14 +150,12 @@ class mesh_Optimization:
         f1=int(nf*Optimization_to)
         print("Mesh has %d vertices and %d faces." % (nv, nf))
         print("Optimization to %d faces." % (f1))
-        if algorithm:algorithm="pymeshlab"
-        else:algorithm="pyfqmr"
         if Optimization_to > 0.0 and Optimization_to <= 1.0:
             new_v,new_f=decimate_mesh(v,f,f1,algorithm,remesh,optimalplacement)
             mesh.v = torch.from_numpy(new_v).contiguous().float().to(mesh.device)
             mesh.f = torch.from_numpy(new_f).contiguous().float().to(mesh.device)
             meshclean.revf3(mesh)
-        return (mesh,nf,f1)
+        return (mesh,nf,f1,)
     
 class mesh_CloseHoles:
     @classmethod
@@ -168,8 +169,8 @@ class mesh_CloseHoles:
                 },
             }
     CATEGORY = "3D_MeshTool/optimization"
-    RETURN_TYPES = ("MESH")
-    RETURN_NAMES = ("Mesh_Out")
+    RETURN_TYPES = ("MESH",)
+    RETURN_NAMES = ("Mesh_Out",)
     FUNCTION = "mesh_edit_CloseHoles"
     def mesh_edit_CloseHoles(self,
                           mesh,
@@ -179,12 +180,10 @@ class mesh_CloseHoles:
                           ):
         v = mesh.v.detach().cpu().numpy()
         f = mesh.f.detach().int().cpu().numpy()
-        new_v,new_f=close_mesh_holes(v,
-                                f,
+        new_v,new_f=close_mesh_holes(v, f,
                                 cleanup_first = Cleanup_first,
                                 max_hole_size = Max_hole_size,
-                                refine_holes = Refine_holes
-                                )
+                                refine_holes = Refine_holes)
         mesh.v = torch.from_numpy(new_v).contiguous().float().to(mesh.device)
         mesh.f = torch.from_numpy(new_f).contiguous().float().to(mesh.device)
         meshclean.revf3(mesh)
@@ -278,15 +277,16 @@ class mesh_subdivide:
         meshclean.revf3(mesh)
         return (mesh,)
 
-NODE_CLASS_MAPPINGS={
-    "Mesh_Optimization":mesh_Optimization,
-    "Mesh_Cleanup":mesh_Cleanup,
-    "Mesh_CloseHoles":mesh_CloseHoles,
-    "Mesh_Subdivide":mesh_subdivide,
-    }
-NODE_DISPLAY_NAMES_MAPPINGS={
-    "Mesh_Optimization":"Mesh Optimization",
-    "Mesh_Cleanup":"Mesh Cleanup",
-    "Mesh_CloseHoles":"Mesh Close Holes",
-    "Mesh_Subdivide":"Mesh Subdivide",
-    }
+NODE_CLASS_MAPPINGS = {
+    "Mesh_Optimization": mesh_Optimization,
+    "Mesh_Cleanup": mesh_Cleanup,
+    "Mesh_Close_Holes": mesh_CloseHoles,
+    "Mesh_Subdivide": mesh_subdivide,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "Mesh_Optimization": "Mesh Optimization",
+    "Mesh_Cleanup": "Mesh Cleanup",
+    "Mesh_Close_Holes": "Mesh Close Holes",
+    "Mesh_Subdivide": "Mesh Subdivide",
+}
